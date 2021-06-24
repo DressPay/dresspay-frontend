@@ -7,7 +7,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 
 Vue.use(VueAxios, axios);
-Vue.axios.defaults.baseURL = "http://localhost:8081";
+Vue.axios.defaults.baseURL = "https://api.dresspay.org";
 Vue.config.productionTip = false;
 
 new Vue({

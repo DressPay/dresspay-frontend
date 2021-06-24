@@ -44,7 +44,7 @@ export default {
     icons: [
       {
         text: "mdi-web",
-        link: "https://dresspay.strexp.net",
+        link: "https://dresspay.org",
       },
       {
         text: "mdi-github",
