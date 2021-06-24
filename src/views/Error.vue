@@ -28,6 +28,8 @@ export default {
           return "Invalid parameter in the request.";
         case "duplicate":
           return "You have already paid this invoice.";
+        case "invalid-clientid":
+          return "We can not recognize the merchant client ID.";
         default:
           return "There is a unknown error.";
       }

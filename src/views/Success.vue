@@ -11,7 +11,9 @@
 
           <p>We'll check your photo and notify you soon&trade;.</p>
 
-          <p class="grey--text">Transaction Code: {{}}</p>
+          <p class="grey--text" v-if="'txid' in $route.query">
+            Transaction Code: {{ $route.query.txid }}
+          </p>
 
           <v-btn
             :href="'next' in $route.query ? $route.query.next : '/'"

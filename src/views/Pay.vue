@@ -12,69 +12,79 @@
             <v-card-title class="primary white--text font-weight-black title">
               PAY DETAILS
             </v-card-title>
-            <v-card-text class="pa-4">
-              <notice />
-              <p class="text-center">
-                You'll pay <b>Strategic Explorations Ltd</b>:
-              </p>
-              <h1 class="text-h2 text-center">{{ pay_price }}</h1>
-              <p class="text-center grey--text mt-2">
-                For transaction ID {{ pay_txid }}: {{ pay_comment }}
-              </p>
-            </v-card-text>
-            <v-divider />
-            <v-card-text class="text-center"
-              >Please select one method to post your dress photo:</v-card-text
-            >
-            <v-tabs grow v-model="upload_method">
-              <v-tabs-slider></v-tabs-slider>
-              <v-tab :key="0">
-                <v-icon left>mdi-upload</v-icon>Upload file
-              </v-tab>
-              <v-tab :key="1"
-                ><v-icon left>mdi-camera</v-icon>Take a photo
-              </v-tab>
-            </v-tabs>
-            <v-tabs-items class="pa-4" v-model="upload_method">
-              <v-tab-item :key="0">
-                <file-upload />
-              </v-tab-item>
-              <v-tab-item :key="1">
-                <camera />
-              </v-tab-item>
-            </v-tabs-items>
-            <v-divider />
-            <v-expand-transition>
-              <div v-show="$store.getters.anyPhoto">
-                <v-card-text>
-                  If possible, you can provide your information for us to be
-                  better previewed in the gallery:
+            <div v-if="!loading">
+              <v-card-text class="pa-4">
+                <notice />
+                <p class="text-center">
+                  You'll pay <b>{{ client_info.name }}</b
+                  >:
+                </p>
+                <h1 class="text-h2 text-center">{{ pay_price }}</h1>
+                <p class="text-center grey--text mt-2">
+                  For transaction ID {{ pay_txid }}: {{ pay_comment }}
+                </p>
+              </v-card-text>
+              <v-divider />
+              <v-card-text class="text-center"
+                >Please select one method to post your dress photo:</v-card-text
+              >
+              <v-tabs grow v-model="upload_method">
+                <v-tabs-slider></v-tabs-slider>
+                <v-tab :key="0">
+                  <v-icon left>mdi-upload</v-icon>Upload file
+                </v-tab>
+                <v-tab :key="1"
+                  ><v-icon left>mdi-camera</v-icon>Take a photo
+                </v-tab>
+              </v-tabs>
+              <v-tabs-items class="pa-4" v-model="upload_method">
+                <v-tab-item :key="0">
+                  <file-upload />
+                </v-tab-item>
+                <v-tab-item :key="1">
+                  <camera />
+                </v-tab-item>
+              </v-tabs-items>
+              <v-divider />
+              <v-expand-transition>
+                <div v-show="$store.getters.anyPhoto">
+                  <v-card-text>
+                    If possible, you can provide your information for us to be
+                    better previewed in the gallery:
 
-                  <v-text-field
-                    v-model="comment"
-                    label="Your name or signature (Optional)"
-                  ></v-text-field>
-                  <v-checkbox
-                    v-model="accept_term"
-                    label="I accept the Term of Service of Dress Pay."
-                  ></v-checkbox>
-                </v-card-text>
-                <v-divider />
-                
-              </div>
-            </v-expand-transition>
+                    <v-text-field
+                      v-model="comment"
+                      label="Your name or signature (Optional)"
+                    ></v-text-field>
+                    <v-checkbox
+                      v-model="accept_term"
+                      label="I accept the Term of Service of Dress Pay."
+                    ></v-checkbox>
+                  </v-card-text>
+                  <v-divider />
+                </div>
+              </v-expand-transition>
+            </div>
+            <div v-else class="text-center my-12">
+              <v-progress-circular
+                indeterminate
+                :size="100"
+                :width="15"
+                color="primary"
+              ></v-progress-circular>
+            </div>
             <pay-footer />
           </v-card>
           <v-card-actions>
-                  <v-btn
-                    block
-                    x-large
-                    @click="pay"
-                    :disabled="!($store.getters.anyPhoto && accept_term)"
-                    color="primary"
-                    ><v-icon large left>mdi-cash-check</v-icon>PAY!</v-btn
-                  >
-                </v-card-actions>
+            <v-btn
+              block
+              x-large
+              @click="pay"
+              :disabled="!($store.getters.anyPhoto && accept_term) || loading"
+              color="primary"
+              ><v-icon large left>mdi-cash-check</v-icon>PAY!</v-btn
+            >
+          </v-card-actions>
         </v-col>
       </v-row>
     </v-container>
@@ -93,7 +103,20 @@ export default {
     upload_method: 0,
     comment: null,
     accept_term: false,
+    loading: true,
+    client_info: null,
   }),
+  created() {
+    this.axios
+      .get("/client?clientid=" + this.$route.query.clientid)
+      .then((res) => {
+        setTimeout(() => {
+          if (res.data.error == true) this.error("invalid-clientid");
+          this.client_info = res.data.data;
+          this.loading = false;
+        }, 2000);
+      });
+  },
   computed: {
     pay_comment() {
       return this.$route.query.subject;
@@ -110,7 +133,11 @@ export default {
     },
   },
   methods: {
-    pay() {
+    error: function (reason = "none") {
+      this.$router.push("/error?type=" + encodeURIComponent(reason));
+    },
+    pay: function () {
+      this.loading = true;
       var form = new FormData();
       Object.keys(this.$route.query).forEach((k) => {
         form.append(k, this.$route.query[k]);
@@ -122,14 +149,21 @@ export default {
           : this.$store.state.photo_upload
       );
       form.append("comment", this.comment);
-      this.axios.post("/pay", form).then((res) => {
-        if (!res.data.error) {
-          var next = this.$route.query.return_url;
-          this.$router.push("/success?next=" + encodeURIComponent(next));
-        } else {
-          this.$router.push("/error?type=" + res.data.reason);
-        }
-      });
+      setTimeout(() => {
+        this.axios.post("/pay", form).then((res) => {
+          if (!res.data.error) {
+            var next = this.$route.query.return_url;
+            this.$router.push(
+              "/success?next=" +
+                encodeURIComponent(next) +
+                "&txid=" +
+                encodeURIComponent(res.data.data)
+            );
+          } else {
+            this.$router.push("/error?type=" + res.data.reason);
+          }
+        });
+      }, 2000);
     },
   },
 };
