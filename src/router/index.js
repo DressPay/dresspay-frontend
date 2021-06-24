@@ -1,6 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Pay from "../views/Pay.vue";
+import Error from "../views/Error.vue";
+import Success from "../views/Success.vue";
+import { queryChecker } from "../utils/queryChecker";
 
 Vue.use(VueRouter);
 
@@ -11,13 +15,19 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/pay",
+    name: "Pay",
+    component: Pay,
+  },
+  {
+    path: "/error",
+    name: "Error",
+    component: Error,
+  },
+  {
+    path: "/success",
+    name: "Success",
+    component: Success,
   },
 ];
 
@@ -25,6 +35,13 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name == "Pay") {
+    if (!queryChecker(to.query)) next("/error?type=param");
+    next();
+  } else next();
 });
 
 export default router;
