@@ -12,6 +12,21 @@
                 Industry-leading innovative payment and settlement methods.
                 <br />You can now use &#x1F457; dress photos to pay bills!
               </h1>
+
+              <v-btn rounded text large dark to="/demo" class="mt-5">
+                <v-icon left>mdi-presentation</v-icon>Demo
+              </v-btn>
+              <v-btn
+                rounded
+                text
+                large
+                dark
+                href="https://docs.dresspay.org"
+                class="mt-5"
+              >
+                <v-icon left>mdi-file-document</v-icon>Documentation
+              </v-btn>
+              <br />
               <v-btn
                 rounded
                 outlined

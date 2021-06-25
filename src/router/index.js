@@ -4,6 +4,8 @@ import Home from "../views/Home.vue";
 import Pay from "../views/Pay.vue";
 import Error from "../views/Error.vue";
 import Success from "../views/Success.vue";
+import Demo from "../views/Demo.vue";
+import NotFound from "../views/404.vue";
 import { queryChecker } from "../utils/queryChecker";
 
 Vue.use(VueRouter);
@@ -28,6 +30,16 @@ const routes = [
     path: "/success",
     name: "Success",
     component: Success,
+  },
+  {
+    path: "/demo",
+    name: "Demo",
+    component: Demo,
+  },
+  {
+    path: "*",
+    name: "Not Found",
+    component: NotFound,
   },
 ];
 

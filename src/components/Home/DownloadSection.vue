@@ -31,6 +31,19 @@
                 <v-icon class="mr-2"> mdi-github </v-icon>
                 GitHub
               </v-btn>
+
+              <v-btn
+                rounded
+                outlined
+                href="https://docs.dresspay.org"
+                target="_blank"
+                large
+                color="white"
+                class="mt-4 mx-4"
+              >
+                <v-icon class="mr-2"> mdi-file-document </v-icon>
+                Documentation
+              </v-btn>
             </v-col>
           </v-row>
         </v-col>
