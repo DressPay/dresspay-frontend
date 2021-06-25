@@ -163,4 +163,16 @@ export default {
   white-space: nowrap;
   overflow-x: auto;
 }
+main:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background-image: url("../assets/bg_tile.png");
+  background-repeat: repeat;
+}
 </style>
