@@ -26,7 +26,7 @@
                 target="_blank"
                 large
                 color="white"
-                class="mt-4"
+                class="mt-4 mr-4"
               >
                 <v-icon class="mr-2"> mdi-github </v-icon>
                 GitHub
@@ -39,7 +39,7 @@
                 target="_blank"
                 large
                 color="white"
-                class="mt-4 mx-4"
+                class="mt-4"
               >
                 <v-icon class="mr-2"> mdi-file-document </v-icon>
                 Documentation

@@ -10,12 +10,7 @@
     >
       <v-app-bar-title> &#x1F457; DressPay &trade; </v-app-bar-title>
       <v-spacer />
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-        class="mr-4"
-        v-if="isXs"
-      />
-      <div v-else>
+      <div>
         <v-btn text @click="$vuetify.goTo('#hero')">
           <span class="mr-2">Home</span>
         </v-btn>
@@ -44,7 +39,6 @@
 <script>
 export default {
   data: () => ({
-    isXs: false,
     items: [
       ["mdi-home-outline", "Home", "#hero"],
       ["mdi-information-outline", "Sobre", "#features"],
@@ -56,21 +50,6 @@ export default {
   props: {
     color: String,
     flat: Boolean,
-  },
-  methods: {
-    onResize() {
-      this.isXs = window.innerWidth < 850;
-    },
-  },
-
-  watch: {
-    isXs(value) {
-      if (!value) {
-        if (this.drawer) {
-          this.drawer = false;
-        }
-      }
-    },
   },
   mounted() {
     this.onResize();

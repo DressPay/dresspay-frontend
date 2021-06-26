@@ -4,19 +4,20 @@
       <v-row>
         <v-col cols="12">
           <v-alert
+            class="my-0"
             v-if="'notify' in $route.query"
             border="left"
             icon="mdi-check"
             prominent
             type="success"
-            ><b>Congratulations! It works!</b>Your test payment finished
+            ><b>Congratulations! It works!</b><br />Your test payment finished
             successfully.</v-alert
           >
         </v-col>
         <v-col cols="12" md="6" lg="8">
           <v-card class="mb-4">
             <v-card-text class="px-8 pt-8">
-              <h1 class="text-center">This is a demo for DressPay.</h1>
+              <h2 class="text-center">This is a demo for DressPay &trade;.</h2>
               <p class="mt-4 text-center">
                 You can get a preview of the latest payment workflow here.
               </p>
@@ -44,6 +45,9 @@
                   name="out_trade_no"
                   label="Invoice ID"
                   v-model="formdata.out_trade_no"
+                  append-icon="mdi-dice-multiple"
+                  mdi-dice
+                  @click:append="reloadUUID"
                 />
                 <v-text-field
                   readonly
@@ -102,6 +106,10 @@
               sign:
               <code>[Generated with token]</code>
             </v-card-text>
+            <v-divider />
+            <v-card-text>
+              endpoint: <code>{{ axios.defaults.baseURL + "/gateway" }}</code>
+            </v-card-text>
           </v-card>
           <v-btn
             x-large
@@ -110,6 +118,7 @@
             @click="pay"
             :disabled="loading"
             class="mt-4"
+            ><v-icon left>mdi-check</v-icon
             >{{ loading ? "Processing..." : "Submit" }}</v-btn
           >
         </v-col>
@@ -135,6 +144,9 @@ export default {
     loading: false,
   }),
   methods: {
+    reloadUUID() {
+      this.formdata.out_trade_no = v4();
+    },
     pay: function () {
       this.loading = true;
       var form = new FormData();
