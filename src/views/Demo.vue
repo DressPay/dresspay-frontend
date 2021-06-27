@@ -86,6 +86,10 @@
           </v-card>
         </v-col>
         <v-col cols="12" md="6" lg="4">
+          <v-alert border="left" dismissible icon="mdi-information" type="info"
+            ><b>This is a demo!</b><br />Your photo uploaded will not be saved
+            and all payments would be accepted automatically.</v-alert
+          >
           <v-card>
             <v-card-title class="primary white--text">
               Request Arguments

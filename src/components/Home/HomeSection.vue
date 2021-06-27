@@ -53,7 +53,7 @@
           <v-row align="center" justify="space-around">
             <v-col
               cols="12"
-              sm="4"
+              md="4"
               class="text-center"
               v-for="(feature, i) in features"
               :key="i"

@@ -10,7 +10,7 @@
     >
       <v-app-bar-title> &#x1F457; DressPay &trade; </v-app-bar-title>
       <v-spacer />
-      <div>
+      <div class="hidden-sm-and-down">
         <v-btn text @click="$vuetify.goTo('#hero')">
           <span class="mr-2">Home</span>
         </v-btn>
