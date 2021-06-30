@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /pay
+Disallow: /error
+Disallow: /success

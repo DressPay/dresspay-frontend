@@ -14,10 +14,7 @@
         </v-btn>
       </v-card-text>
 
-      <v-card-text class="white--text pt-0">
-        This project is sponsored and technically supported by
-        <b>Strategic Explorations</b>.
-      </v-card-text>
+      <v-card-text class="white--text pt-0" v-html="$t('desc')"> </v-card-text>
 
       <v-divider></v-divider>
 
@@ -54,3 +51,14 @@ export default {
   }),
 };
 </script>
+
+<i18n>
+{
+  "en": {
+    "desc": "This project is sponsored and technically supported by <b>Strategic Explorations</b>."
+  },
+  "zh": {
+    "desc": "本项目由 <b>Strategic Explorations</b> 提供技术支持"
+  }
+}
+</i18n>

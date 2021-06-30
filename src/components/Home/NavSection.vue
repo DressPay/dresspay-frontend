@@ -12,13 +12,16 @@
       <v-spacer />
       <div class="hidden-sm-and-down">
         <v-btn text @click="$vuetify.goTo('#hero')">
-          <span class="mr-2">Home</span>
+          <span class="mr-2">{{ $t("nav.home") }}</span>
         </v-btn>
         <v-btn text @click="$vuetify.goTo('#features')">
-          <span class="mr-2">Features</span>
+          <span class="mr-2">{{ $t("nav.features") }}</span>
         </v-btn>
         <v-btn text @click="$vuetify.goTo('#download')">
-          <span class="mr-2">Source</span>
+          <span class="mr-2">{{ $t("nav.source") }}</span>
+        </v-btn>
+        <v-btn icon @click="switchLang">
+          <v-icon>mdi-translate</v-icon>
         </v-btn>
       </div>
     </v-app-bar>
@@ -38,22 +41,44 @@
 
 <script>
 export default {
-  data: () => ({
-    items: [
-      ["mdi-home-outline", "Home", "#hero"],
-      ["mdi-information-outline", "Sobre", "#features"],
-      ["mdi-download-box-outline", "Download", "#download"],
-      ["mdi-currency-usd", "Preços", "#pricing"],
-      ["mdi-email-outline", "Contatos", "#contact"],
-    ],
-  }),
   props: {
     color: String,
     flat: Boolean,
   },
-  mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
+  methods: {
+    switchLang() {
+      switch (this.$root.$i18n.locale) {
+        case "en": {
+          this.$root.$i18n.locale = "zh";
+          break;
+        }
+        case "zh": {
+          this.$root.$i18n.locale = "en";
+          break;
+        }
+        default:
+          this.$root.$i18n.locale = "en";
+      }
+    },
   },
 };
 </script>
+
+<i18n>
+{
+  "en": {
+    "nav": {
+      "home": "Home",
+      "features": "Features",
+      "source": "Source"
+    }
+  },
+  "zh": {
+    "nav": {
+      "home": "主页",
+      "features": "特点",
+      "source": "源码"
+    }
+  }
+}
+</i18n>

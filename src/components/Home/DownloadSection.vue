@@ -13,11 +13,10 @@
             </v-col>
             <v-col cols="12" sm="8" class="white--text text-left">
               <h1 class="font-weight-light display-2 mb-2">
-                Want to assist in development?
+                {{ $t("title") }}
               </h1>
               <h1 class="font-weight-light">
-                This project is completely free and open source, you can find it
-                on GitHub, or you can build an instance of DressPay yourself.
+                {{ $t("desc") }}
               </h1>
               <v-btn
                 rounded
@@ -29,7 +28,7 @@
                 class="mt-4 mr-4"
               >
                 <v-icon class="mr-2"> mdi-github </v-icon>
-                GitHub
+                {{ $t("btn.github") }}
               </v-btn>
 
               <v-btn
@@ -42,7 +41,7 @@
                 class="mt-4"
               >
                 <v-icon class="mr-2"> mdi-file-document </v-icon>
-                Documentation
+                {{ $t("btn.docs") }}
               </v-btn>
             </v-col>
           </v-row>
@@ -67,3 +66,24 @@
   height: 100%;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "title": "Want to assist in development?", 
+    "desc": "This project is completely free and open source, you can find it on GitHub, or you can build an instance of DressPay yourself.", 
+    "btn": {
+      "github": "GitHub", 
+      "docs": "Documentation"
+    }
+  },
+ "zh": {
+    "title": "希望协助开发运行?", 
+    "desc": "本项目是完全自由且开源的，您可以在 GitHub 上找到它的所有相关代码，也可以自己搭建 DressPay 的实例。", 
+    "btn": {
+      "github": "GitHub", 
+      "docs": "文档"
+    }
+  }
+}
+</i18n>
