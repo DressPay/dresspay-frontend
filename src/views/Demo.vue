@@ -159,7 +159,7 @@ export default {
       form.append("return_url", this.formdata.return_url);
       form.append("out_trade_no", this.formdata.out_trade_no);
       setTimeout(() => {
-        this.axios.post("/demo/getsign", form).then((res) => {
+        this.axios.post("/demo/sign", form).then((res) => {
           if (!res.data.error) {
             this.formdata.sign = res.data.data.sign;
             setTimeout(() => {
